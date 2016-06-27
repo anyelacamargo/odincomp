@@ -62,43 +62,52 @@ $^{3}$ x\\ $^{2}$ y}
 \begin{abstract}
 
 \tiny
- \keyFont{ \section{Keywords:} wheat senescence diseases datascience phenomics } %All article types: you may provide up to 8 keywords; at least 5 are mandatory.
+ \keyFont{ \section{Keywords:} computer vision; arabidopsis; machine learning; phenomics } %All article types: you may provide up to 8 keywords; at least 5 are mandatory.
 \end{abstract}
 
 \section{Introduction}
-In this chapter, the effects of image segmentation quality on shape descriptors values are explored. Generally, Image segmentation is the classification of all pixels in a picture into classes. A descriptions of segmentation methods used for images in this thesis has been described at Material and Methods chapter. Arabidopsis thaliana top-view pictures have been segmented either as rosettes or background (Figure 1). However, classification methods are prone to several kind of classification errors. Briefly, all pixels strictly lay on one of the classes, plants on the foreground, and all other elements in the image on the background. However, plant pixels may be not classified correctly, becoming a false negative. This may happens due to similarity in colours between plant and other image elements. Examples are yellow or grey regions on leaves, pieces of soil or stones on top of plant leaves, or even thin petioles. On the other hand, background pieces may be misclassified as foreground, being then a false positive. Examples are green pixels, from moss or algae on soil, whose colour is similar to plants, and also stones and plastic pieces, e.g. pot border, that reflect lights as plants do (Figure 2). 
-Figure 1 Example of Arabidopsis thaliana Segmentation Left). Plant pixels. Center) Original Image. Right) Background pixels
- 
-Figure 2: Example of Arabidopsis Segmentation with segmentation errors Left) Foreground as plant pixels (True Positives) including pot border pixels as artefacts (False Positives). Centre) Original image. Left) Background pixels (True Negatives) including a yellow leaf and spots belonging to a turning yellow leaf (False Negatives).
-Segmentation quality affects shape descriptors values of rosette in different manners. False negatives reduce the projected rosette area, but may or may not affect other parameters. For example, missing sparse pixels on leaves blades and perimeter may not affect the calculation of Convex Hull, Compactness, etc. But if a whole leave disappear, e.g because of grey colour, that may affect all the shape measurements, since spatial pixel distribution is modified. On the other hand, false positive may have strong effect on determining Convex Hull and other parameters. A single pixel, if far from the plant limits, will increase the extent of the Hull and will influence Compactness, but may not have strong effects on Roundness or Eccentricity. A bigger object misclassified as plant, like stones or pot borders, will have stronger effect on perimeter, roundness or eccentricity.
-In this chapter, several segmentation method are confront against a ground-truth, to assess the role of segmentation quality in the measurement (see chapter on Material and Methods). A segmentation workflow in Lemnagrid (Lemnatec 2010) has been elaborated such that it is more prone to miss plant pixels from foreground than accept alien pixels into it. A Matlab script has been written in a way that it is accurate classifying plants but accepts pieces of the background as plant more often (higher rate of false negatives); In addition, it also miss larger leaves extremes that are close to the pot border.
+
+Image segmentation is the process of identifying and delineating objects in images. Segmentation techniques are used to separate the region of interest (ROI) from the remainder of the image. Image segmentation is critical as it is the major step demarcating between ROI and the background \cite{Rathnayaka2011226} and thus, has a major effect over the calculation of shape descriptors which are produced to describe a given shape. Due to the advent of computer technology image-processing techniques have become increasingly important in a wide variety of applications. \todo{explain why is important in phenomics}
+
+Image segmentation may be thought of as consisting of two related processes—recognition and delineation. Recognition is the high-level process of determining roughly the whereabouts of an object of interest in the image \cite{Udupa200675}. Delineation is the low-level process of determining the precise spatial extent and point-by-point composition (material membership percentage) of the object in the image. Humans are more qualitative and less quantitative, whereas, computerised algorithms are more quantitative and less qualitative. Incorporation of high-level expert human knowledge algorithmically into the computer has remained a challenge. Most of the drawbacks of current segmentation methods may thus be attributed to the latter weakness of computers in the recognition process. We envisage, therefore, that the assistance of humans, knowledgeable in the application domain, will remain essential in any practical image segmentation method. The challenge and goal for image scientists are to develop methods that minimize the degree of this required help as much as possible.
+
+While algorithms for image segmentation have been in development for several decades \cite{ZAITOUN2015797}, the development of systematic evaluation frameworks for these algorithms has been lagging, particularly in plant phenotyping. In this paper, two segmentation methods are compared against manually segmented images, to assess the role of segmentation quality in the measurement of the shape descriptor. A segmentation workflow in Lemnagrid \cite{ISI:000245413900027} has been created such that it is more prone to miss plant pixels from foreground than accept alien pixels into it. A Matlab \cite{MATLAB:2010} script has been written in a way that it is accurate classifying plants but accepts pieces of the background as plant more often (higher rate of false negatives); In addition, it also miss larger leaves extremes that are close to the pot border.
+
+
+
+
+
 Each segmentation routine has first been evaluated in terms of classification quality, and later their shape descriptor accuracy. This strategy allows to conclude that including segmentation artefacts reduce precision of shape descriptors more than missing plants, at least when segmentation errors are not very big. It is possible to suggest that experimental systems have to be set up to ease image segmentation at least to eliminate as much as possible misclassification of background pixels.
-
-
-
 
 %\begin{methods}
 \section{Material \& Methods}
 
-
-\subsection{Plant Material}
-
-
-\subsection{Glass House Cultivation}
-
-
-
+\todo{}
+Arabidopsis thaliana top-view pictures have been segmented either as rosettes or background \ref{fig1:segmentation}. Briefly, each pixel should belong to one of two classes e.g. foreground (1) and background (0). Strictly speaking, foreground pixels represent the plant and background pixels represent all other elements in the image, e.g. stones, pot and soil. Due to similarity in colours between plant and other image elements, plant pixels may be not classified correctly. Common culprits of misclassification are yellow or grey regions on leaves, pieces of soil or stones on top of plant leaves and thin petioles. Likewise, background pixels may be misclassified as foreground. Examples misclassified background objects are pixels corresponding to moss or algae growing on the soil surface and whose colour is similar to the target foreground (the plant). Other examples are stones and plastic pieces and pot edges \ref{fig1:segmentation}.
 
 \subsection{Phenotyping}
 
 
+\subsection{Shape descriptors}
 
-\subsection{Image processing}
+In general, descriptors are some set of numbers that are produced to describe a given shape. The shape may not be
+entirely reconstructable from the descriptors, but the descriptors for different shapes should be different enough that
+the shapes can be discriminated.
+What qualifies as a good descriptor? In general, the better the descriptor is, the greater the difference in the descriptors
+of significantly different shapes and the lesser the difference for similar shapes. What then qualifies similarity
+of shape? Well, nobody’s really been able to answer that one yet. If we could quantify similarity of shape, we’d have
+the perfect descriptor. Indeed, that’s what descriptors are: attempts to quantify shape in ways that agree with human
+intuition (or task-specific requirements). Regions can either describe boundary-based properties of an object or they can describe region-based properties. 
+ \cite{}
+\todo{Can youi out examples of shape descriptors?}
 
 \subsection{Segmentation Pipeline}
-Two automatic segmentation pipelines has been tested, named “Lemnatec” and “Matlab” hereafter (also LT and ML). Lemnatec workflow was performed on LemnaGrid Software (see chapter on Material and Methods). It consists on image analysis in three separate sub-routines. One is focused on extract metallic tags on pots borders by eliminating very bright pixels. A second one aims to find plant pixels based on colour transformations and subsequent global thresholding (see chapter on Material and Methods for further detail). Finally, a third one endeavours to remove other bright elements as plastic pots and stones.
-Matlab pipeline consist in a script using Matlab’s Image Processing toolbox \cite{MATLAB:2010}. It search in parallel for green pixels, those with green intensity over 60 units (up to a maximum of 255), and for pixels whose green intensity is higher than red intensity. The aim was to keep leaves at the time that remove bright objects, but keeping those that maintain their green intensity. Thus, green and yellow leaves are classified as leaves, but yellow-reddish stones are removed. However, to avoid many plastic pot pixels included as foreground, pots borders were trimmed through a mathematical morphology operation called erosion. Border erosion impose to miss some leaves extremes counting as False Negatives, and it is still not able to get rid of all the pots pixels. Therefore, in spite of Matlab routine is far from optimal, it allows to study the effects of including segmentation artefacts of different size into Shape descriptors calculations.
-Same plant images has been segmented automatically with both methods. In addition, they were manually segmented in GIMP to stablish a “Control-like” dataset, commonly called ground truth (GT hereafter). Manually segmented images constitute a ground truth to compare both workflows against it.
+
+Two automatic segmentation pipelines has been tested. Lemnatec (LT) workflow was performed using LemnaGrid Software \cite{ISI:000245413900027}. It consists on image analysis in three separate sub-routines. One extracts metallic tags on pots borders by eliminating very bright pixels. Another looks for plant pixels based on colour transformations and subsequent global thresholding. The third routine removes other bright elements such as plastic pots and stones.
+Matlab (MA) pipeline consist in a script using Matlab’s Image Processing toolbox \cite{MATLAB:2010}. It searches in parallel for green pixels, those with green intensity over 60 units (up to a maximum of 255), and for pixels whose green intensity is higher than red intensity. The aim was to keep leaves at the time that remove bright objects, but keeping those that maintain their green intensity. Thus, green and yellow leaves are classified as leaves, but yellow-reddish stones are removed. However, to avoid many plastic pot pixels included as foreground, pots borders were trimmed through a mathematical morphology operation called erosion. Border erosion impose to miss some leaves extremes counting as False Negatives, and it is still not able to get rid of all the pots pixels. Therefore, in spite of Matlab routine is far from optimal, it allows to study the effects of including segmentation artefacts of different size into Shape descriptors calculations.
+Same  images has been segmented automatically with both methods. In addition, they were manually segmented using GIMP \cite{} to stablish a 'ground-truth' dataset (GT). Manually segmented images constitute a ground truth to compare both workflows against it.
+
+
 \subsection{Segmentation evaluation}
 Two ways of evaluating segmentation are studied in this section. First, segmentation quality is analysed by comparing by pixels each automatically segmented images with their ground truth. Second, Shape Descriptors errors are analysed as deviations from ground truth values.
 For segmentation quality, an exploration using the number of false positives and false negatives is provided. Generally, comparing automatically segmented images, either Lemnatec or Matlab pipeline, against ground truth corresponding image, requires calculation the so called confusion matrix. A confusion matrix, see \cite{Fawcett:2006:IRA:1159473.1159475} for a review, summarize the number of true positives and negatives and the number of false positives and negatives are obtained. This matrix allows to calculate for a given method several metrics that aid into quantify segmentation errors. This metrics are summarize in box 1 for readers convenience. 
@@ -160,6 +169,11 @@ Maximum Diameter shows a different pattern for Lemnatec and Matlab pipelines. Le
 
 
 \section{Discussion}
+
+\todo{from intro}
+Segmentation quality affects shape descriptors values of rosette in different manners. False negatives reduce the projected rosette area, but may or may not affect other parameters. For example, missing sparse pixels on leaves blades and perimeter may not affect the calculation of Convex Hull, Compactness, etc. But if a whole leave disappear, e.g because of grey colour, that may affect all the shape measurements, since spatial pixel distribution is modified. On the other hand, false positive may have strong effect on determining Convex Hull and other parameters. A single pixel, if far from the plant limits, will increase the extent of the Hull and will influence Compactness, but may not have strong effects on Roundness or Eccentricity. A bigger object misclassified as plant, like stones or pot borders, will have stronger effect on perimeter, roundness or eccentricity.
+\todo{from intro}
+
 In this chapter, the relevance of segmentation to calculate shape descriptors has been explored. Two methods of segmentation, named Lemnatec and Maltlab, have been used to explore the effect of artefacts and absence of plant material in the segmented images. The Lemnatec pipeline used was elaborated focusing in the elimination of artefacts, with the counterpart of leaving out some plant material. Matlab pipeline was elaborated to keep most of plants, with the common miss of small petioles, but accepts alien objects as plant often. For plants spanning further than pots border, leaves extreme were also missed.
 The effect of missing or adding some pixels does affect Area. It can be assumed that small size artefacts are dissolved when the number of plant pixels are big enough. However, missing plants pixels is important as observed in the correlation with false negative rate.
 Shape descriptors require to calculate several other geometrical quantities as perimeter or convex hull. The lack of leaves reduce the perimeter and the artefacts enlarge the Convex hull. This image processing-driven bias is conveyed to the shape descriptors calculated from them, like Compactness and Roundness.
@@ -218,12 +232,20 @@ The authors declare that the research was conducted in the absence of any commer
 %\end{figure}
 %
 %
-%\begin{figure}[h!]
-%\begin{center}
-%\includegraphics[width=10cm]{flowchart.jpg}
-%\end{center}
-% \caption{ Whole leaf senescence flowchart}\label{fig1:flowchart}
-%\end{figure}
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=10cm]{Figure1.png}
+\end{center}
+ \caption{Example of Arabidopsis thaliana Segmentation Left). Plant pixels. Center) Original Image. Right) Background pixels}\label{fig1:segmentation}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=10cm]{Figure2.png}
+\end{center}
+ \caption{Example of Arabidopsis Segmentation with segmentation errors Left) Foreground as plant pixels (True Positives) including pot border pixels as artefacts (False Positives). Centre) Original image. Left) Background pixels (True Negatives) including a yellow leaf and spots belonging to a turning yellow leaf (False Negatives).}\label{fig1:segmentation}
+\end{figure}
+
 %
 %\begin{figure}[h!]
 %\begin{center}
