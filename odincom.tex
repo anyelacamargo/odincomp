@@ -73,10 +73,6 @@ Image segmentation may be thought of as consisting of two related processes—re
 
 While algorithms for image segmentation have been in development for several decades \cite{ZAITOUN2015797}, the development of systematic evaluation frameworks for these algorithms has been lagging, particularly in plant phenotyping. In this paper, two segmentation methods are compared against manually segmented images, to assess the role of segmentation quality in the measurement of the shape descriptor. A segmentation workflow in Lemnagrid \cite{ISI:000245413900027} has been created such that it is more prone to miss plant pixels from foreground than accept alien pixels into it. A Matlab \cite{MATLAB:2010} script has been written in a way that it is accurate classifying plants but accepts pieces of the background as plant more often (higher rate of false negatives); In addition, it also miss larger leaves extremes that are close to the pot border.
 
-
-
-
-
 Each segmentation routine has first been evaluated in terms of classification quality, and later their shape descriptor accuracy. This strategy allows to conclude that including segmentation artefacts reduce precision of shape descriptors more than missing plants, at least when segmentation errors are not very big. It is possible to suggest that experimental systems have to be set up to ease image segmentation at least to eliminate as much as possible misclassification of background pixels.
 
 %\begin{methods}
@@ -99,7 +95,7 @@ of shape? Well, nobody’s really been able to answer that one yet. If we could 
 the perfect descriptor. Indeed, that’s what descriptors are: attempts to quantify shape in ways that agree with human
 intuition (or task-specific requirements). Regions can either describe boundary-based properties of an object or they can describe region-based properties. 
  \cite{}
-\todo{Can youi out examples of shape descriptors?}
+\todo{Can you out examples of shape descriptors?}
 
 \subsection{Segmentation Pipeline}
 
@@ -133,13 +129,15 @@ Deviation of Shape descriptor values from ground truth ones helps testing the ef
 
 
 \subsection{Statistics }
-
+\todo{Can you comment on stats here e.g. software, methods, data normalisation, etc}
 
 \section{Results}
 
-An overview on the results indicated that Lemnatec pipeline performed well to remove artefacts, but seems to fail on capturing all leaves and petioles. Matlab pipeline worked fine removing soil and stones, but had troubles to classify metallic tags and plastic pot borders, in addition, leaves close to pots or outside it are often missed. Henceforth, they are two examples of segmentation, but the Matlab script shows the effect of those artefacts on the real values.
-Image Segmentation Quality
-A visual exploratory analysis of the figure (1) shows the False Negative Rate against the False Discovery Rate. Each point correspond to a rosette image. It shows that Lemnatec pipeline has a low False Discovery Rate, indicating that few artefacts are included in the segmentation. However, the range on the False Negative Rate indicate that some images may have lost up to 60\% of the plant. The Matlab pipeline, seems to perform better on the False Negative Rate, since most of the images keep the pixel lost under the 20\%. However, the False Discovery Rate shows that the pipeline let some artefacts to be included, but those does not exceed the 2\%. 
+An overview on the results indicated that Lemnatec pipeline performed well to remove artefacts \todo{(e.g. ????)}, but seems to fail to capture all leaves and petioles. The Matlab pipeline could remove soil and stones, but had problems segmenting metallic tags, pot's edges and leaves close to the pot's edge. Henceforth, they are two examples of segmentation, but the Matlab script shows the effect of those artefacts on the real values.
+
+
+\subsection{Image Segmentation Quality}
+Visual exploratory analysis of \ref{fig1:segmentation} shows the False Negative Rate against the False Discovery Rate \todo{Can you show evidence to support this statement?}. Each point correspond to a rosette image. It shows that Lemnatec pipeline has a low False Discovery Rate, indicating that few artefacts are included in the segmentation. However, the range on the False Negative Rate indicate that some images may have lost up to 60\% of the plant. The Matlab pipeline, seems to perform better on the False Negative Rate, since most of the images keep the pixel lost under the 20\%. However, the False Discovery Rate shows that the pipeline let some artefacts to be included, but those does not exceed the 2\%. 
 Figure 3: Scatter plot of False Negative Rate against False Discovery rate for segmentation routines called “Lemnatec” and “Matlab”. Note: Each dot corresponds to an image. All images were segmented with “Lemnatec” and “Matlab” routines and matched against a manual segmentation called ground truth
 
 \subsection{Effects on Shape descriptors}
